@@ -43,7 +43,7 @@ it("renders a clickable button", () => {
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
 
-it.skip("renders a disabled button", () => {
+it("renders a disabled button", () => {
   const handleClick = jest.fn();
   const { getByText } = render(
     <Button disabled onClick={handleClick}>
