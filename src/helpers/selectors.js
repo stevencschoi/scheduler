@@ -3,7 +3,7 @@
 //   return filteredNames;
 // }
 
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
   const daysArray = [];
   for (const aptDay of state.days) {
     if (aptDay.name === day) {
