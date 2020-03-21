@@ -34,11 +34,11 @@ export function useApplicationData() {
     };
     return axios.delete(`/api/appointments/${id}`, appointment).then(() => {
       setState(prev => ({ ...prev, appointments }));
+      console.log(state);
     });
   }
 
   const setDay = day => setState({ ...state, day });
-  // const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
     Promise.all([
@@ -57,7 +57,7 @@ export function useApplicationData() {
       .catch(err => {
         console.error(err);
       });
-  }, []);
+  }, [bookInterview, deleteInterview]);
 
   return { state, setDay, bookInterview, deleteInterview };
 }
