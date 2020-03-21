@@ -34,9 +34,15 @@ export function useApplicationData() {
     };
     return axios.delete(`/api/appointments/${id}`, appointment).then(() => {
       setState(prev => ({ ...prev, appointments }));
-      console.log(state);
     });
   }
+
+  // make api get request whenever appointments are updated
+  useEffect(() => {
+    axios
+      .get("http://localhost:8001/api/days")
+      .then(days => setState(state => ({ ...state, days: days.data })));
+  }, [state.appointments]);
 
   const setDay = day => setState({ ...state, day });
 
@@ -57,7 +63,7 @@ export function useApplicationData() {
       .catch(err => {
         console.error(err);
       });
-  }, [bookInterview, deleteInterview]);
+  }, []);
 
   return { state, setDay, bookInterview, deleteInterview };
 }
