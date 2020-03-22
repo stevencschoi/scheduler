@@ -3,6 +3,7 @@ import classNames from "classnames";
 import "components/DayListItem.scss";
 
 export default function DayListItem(props) {
+  // for displaying number of available interview spots with appropriate grammar
   const formatSpots = function(spots) {
     if (spots === 0) {
       return "no spots remaining";
@@ -13,6 +14,7 @@ export default function DayListItem(props) {
     } else return `${spots} spots remaining`;
   };
 
+  // add class names based on props
   const dayClass = classNames("day-list__item", {
     "day-list__item--selected": props.selected,
     "day-list__item--full": props.spots === 0
