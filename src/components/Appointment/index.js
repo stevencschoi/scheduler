@@ -27,6 +27,9 @@ export default function Appointment(props) {
   );
   // on save, update state and show new appointment
   function save(student, interviewer) {
+    if (!student || !interviewer) {
+      return transition(ERROR_SAVE);
+    }
     const interview = {
       student,
       interviewer
@@ -98,7 +101,7 @@ export default function Appointment(props) {
       {/* error handling components */}
       {mode === ERROR_SAVE && (
         <Error
-          message="Error Saving. Please try again."
+          message="Error saving. Please try again."
           onClose={() => back()}
         />
       )}
