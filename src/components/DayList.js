@@ -2,6 +2,7 @@ import React from "react";
 import DayListItem from "components/DayListItem";
 
 export default function DayList(props) {
+  // layout for sidebar
   const days = props.days.map(day => (
     <DayListItem
       key={day.id}

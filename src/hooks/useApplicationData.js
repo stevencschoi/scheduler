@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
@@ -10,29 +10,20 @@ export function useApplicationData() {
     interviewers: {}
   });
 
-  // const SET_DAY = "SET_DAY";
-  // const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-  // const SET_INTERVIEW = "SET_INTERVIEW";
+  // pulling out repetitive code for modularity
+  function updateAppointment(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
 
-  // function reducer(state, action) {
-  //   switch (action.type) {
-  //     case SET_DAY:
-  //       return {
-  //         /* insert logic */
-  //       };
-  //     case SET_APPLICATION_DATA:
-  //       return {
-  //         /* insert logic */
-  //       };
-  //     case SET_INTERVIEW: {
-  //       return; /* insert logic */
-  //     }
-  //     default:
-  //       throw new Error(
-  //         `Tried to reduce with unsupported action type: ${action.type}`
-  //       );
-  //   }
-  // }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState(prev => ({ ...prev, appointments }));
+  }
 
   function bookInterview(id, interview) {
     const appointment = {
@@ -44,6 +35,7 @@ export function useApplicationData() {
       [id]: appointment
     };
 
+    // push new appointment to database and set state
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
       setState(prev => ({ ...prev, appointments }));
     });
@@ -63,33 +55,25 @@ export function useApplicationData() {
     });
   }
 
-  function updateAppointment(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    setState(prev => ({ ...prev, appointments }));
-  }
-
   useEffect(() => {
-    socket.onopen = function(event) {
+    socket.onopen = function() {
       socket.send("ping");
     };
-
-    socket.close();
   }, []);
 
   socket.onmessage = function(event) {
+    console.log("Message Received:", event.data);
+    // parse message from server
     const msg = JSON.parse(event.data);
+    // listen for SET_INTERVIEW and update state
     if (msg.type === "SET_INTERVIEW") {
       updateAppointment(msg.id, msg.interview);
     }
+  };
+
+  // close connection
+  socket.onclose = function() {
+    console.log("Connection closed");
   };
 
   // make api get request whenever appointments are updated
@@ -101,6 +85,7 @@ export function useApplicationData() {
 
   const setDay = day => setState({ ...state, day });
 
+  // update state and resolve promises whenever appointments are updated
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),

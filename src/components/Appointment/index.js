@@ -21,10 +21,11 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
+  // using custom hook to render components
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-
+  // on save, update state and show new appointment
   function save(student, interviewer) {
     const interview = {
       student,
@@ -37,6 +38,7 @@ export default function Appointment(props) {
       .catch(err => transition(ERROR_SAVE));
   }
 
+  // on delete, update state and show 'empty' appointment
   function deleteItem() {
     transition(DELETING, true);
     props
@@ -45,6 +47,7 @@ export default function Appointment(props) {
       .catch(err => transition(ERROR_DELETE, true));
   }
 
+  // 'show' mode will only display if interview has a truthy value (causes errors otherwise)
   useEffect(() => {
     if (props.interview && mode === EMPTY) {
       transition(SHOW);
@@ -55,6 +58,7 @@ export default function Appointment(props) {
   }, [props.interview, transition, mode]);
 
   return (
+    // header will always be displayed
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
@@ -74,6 +78,7 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
+      {/* display status messages upon user action */}
       {mode === SAVING && <Status message="Saving" />}
       {mode === CONFIRM && (
         <Confirm onCancel={() => back()} onConfirm={deleteItem} />
@@ -89,6 +94,8 @@ export default function Appointment(props) {
           onCancel={() => transition(SHOW)}
         />
       )}
+
+      {/* error handling components */}
       {mode === ERROR_SAVE && (
         <Error
           message="Error Saving. Please try again."

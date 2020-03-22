@@ -19,9 +19,11 @@ export default function Application(props) {
     deleteInterview
   } = useApplicationData();
 
+  // display schedule for a given day
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
+  // each appointment includes the following properties, including functions for user interaction
   const schedule = appointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
 
@@ -58,6 +60,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
+        {/* additional appointment added for CSS styling purposes */}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
