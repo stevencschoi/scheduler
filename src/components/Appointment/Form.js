@@ -28,6 +28,8 @@ export default function Form(props) {
             onChange={e => {
               setName(e.target.value);
             }}
+            //for testing purposes
+            data-testid="student-name-input"
           />
         </form>
         <InterviewerList

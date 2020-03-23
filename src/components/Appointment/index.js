@@ -27,9 +27,9 @@ export default function Appointment(props) {
   );
   // on save, update state and show new appointment
   function save(student, interviewer) {
-    if (!student || !interviewer) {
-      return transition(ERROR_SAVE);
-    }
+    // if (!student || !interviewer) {
+    //   return transition(ERROR_SAVE);
+    // }
     const interview = {
       student,
       interviewer

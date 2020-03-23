@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+// stretch assignment to include sockets for real-time data updating
 const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
 export function useApplicationData() {
@@ -12,17 +13,29 @@ export function useApplicationData() {
 
   // pulling out repetitive code for modularity
   function updateAppointment(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
+    if (!interview) {
+      const appointment = {
+        ...state.appointments[id],
+        interview: null
+      };
 
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState(prev => ({ ...prev, appointments }));
+    } else {
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
 
-    setState(prev => ({ ...prev, appointments }));
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState(prev => ({ ...prev, appointments }));
+    }
   }
 
   function bookInterview(id, interview) {
@@ -62,7 +75,6 @@ export function useApplicationData() {
   }, []);
 
   socket.onmessage = function(event) {
-    console.log("Message Received:", event.data);
     // parse message from server
     const msg = JSON.parse(event.data);
     // listen for SET_INTERVIEW and update state
@@ -103,7 +115,7 @@ export function useApplicationData() {
       .catch(err => {
         console.error(err);
       });
-  }, [state.appointments]);
+  }, []);
 
   return { state, setDay, bookInterview, deleteInterview };
 }
