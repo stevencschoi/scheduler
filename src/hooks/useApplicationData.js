@@ -13,6 +13,7 @@ export function useApplicationData() {
 
   // pulling out repetitive code for modularity
   function updateAppointment(id, interview) {
+    // update state based on whether interview is truthy or falsy
     if (!interview) {
       const appointment = {
         ...state.appointments[id],
