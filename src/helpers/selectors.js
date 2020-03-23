@@ -44,6 +44,7 @@ const getInterviewersForDay = (state, day) => {
   for (const appointment of Object.values(state.appointments)) {
     if (!appointments.includes(appointment.id) && appointment.interview) {
       const interviewer = appointment.interview.interviewer.toString();
+      // add interviewer to array without duplicates
       if (!interviewers.includes(state.interviewers[interviewer])) {
         interviewers.push(state.interviewers[interviewer]);
       }
