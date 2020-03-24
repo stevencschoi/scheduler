@@ -27,9 +27,6 @@ export default function Appointment(props) {
   );
   // on save, update state and show new appointment
   function save(student, interviewer) {
-    // if (!student || !interviewer) {
-    //   return transition(ERROR_SAVE);
-    // }
     const interview = {
       student,
       interviewer
@@ -62,7 +59,7 @@ export default function Appointment(props) {
 
   return (
     // header will always be displayed
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && props.interview && (
