@@ -29,8 +29,9 @@ describe("Application", () => {
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
-  xit("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
-    const { container, debug } = render(<Application />);
+  // This test fails because updating the spots is a function on the server side
+  it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
+    const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -54,13 +55,13 @@ describe("Application", () => {
       queryByText(day, "Monday")
     );
 
-    // due to implementation of web sockets to update spots remaining, this test will fail as decsribed
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
 
+  // This test fails because updating the spots is a function on the server side
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
     // 1. Render the Application.
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -88,9 +89,42 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    // This test will fail due to the implementation of sockets to update the spots remaining
-    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
 
-    debug();
+    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+  });
+
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // 1. Render the Application.
+    const { container } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    // 3. Click the "Edit" button on the booked appointment.
+    const appointment = getAllByTestId(
+      container,
+      "appointment"
+    ).find(appointment => queryByText(appointment, "Archie Cohen"));
+
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+
+    // update appointment to new student
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Lydia Miller-Jones" }
+    });
+
+    fireEvent.click(getByText(appointment, "Save"));
+
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+    console.log(prettyDOM(container));
+    // wait for appointments to render and find updated appointment
+    await waitForElement(() => getByText(container, "Lydia Miller-Jones"));
+
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+
+    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
 });

@@ -52,6 +52,12 @@ export function useApplicationData() {
     // push new appointment to database and set state
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
       setState(prev => ({ ...prev, appointments }));
+      Promise.all([axios.get(`/api/days`)]).then(([days]) => {
+        setState(prev => ({
+          ...prev,
+          days: days.data
+        }));
+      });
     });
   }
 
@@ -66,6 +72,12 @@ export function useApplicationData() {
     };
     return axios.delete(`/api/appointments/${id}`, appointment).then(() => {
       setState(prev => ({ ...prev, appointments }));
+      Promise.all([axios.get(`/api/days`)]).then(([days]) => {
+        setState(prev => ({
+          ...prev,
+          days: days.data
+        }));
+      });
     });
   }
 
@@ -90,11 +102,11 @@ export function useApplicationData() {
   };
 
   // make api get request whenever appointments are updated
-  useEffect(() => {
-    axios
-      .get("/api/days")
-      .then(days => setState(prev => ({ ...prev, days: days.data })));
-  }, [state.appointments]);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/days")
+  //     .then(days => setState(prev => ({ ...prev, days: days.data })));
+  // }, [state.appointments]);
 
   const setDay = day => setState({ ...state, day });
 
