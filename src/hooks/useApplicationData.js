@@ -101,13 +101,6 @@ export function useApplicationData() {
     console.log("Connection closed");
   };
 
-  // make api get request whenever appointments are updated
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/days")
-  //     .then(days => setState(prev => ({ ...prev, days: days.data })));
-  // }, [state.appointments]);
-
   const setDay = day => setState({ ...state, day });
 
   // update state and resolve promises whenever appointments are updated

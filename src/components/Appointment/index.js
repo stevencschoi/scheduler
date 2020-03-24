@@ -104,7 +104,7 @@ export default function Appointment(props) {
       )}
       {mode === ERROR_DELETE && (
         <Error
-          message="Error Deleting. Please try again."
+          message="Error deleting. Please try again."
           onClose={() => back()}
         />
       )}
