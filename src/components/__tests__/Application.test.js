@@ -186,7 +186,7 @@ describe("Application", () => {
     await waitForElement(() =>
       getByText(appointment, "Error deleting. Please try again.")
     );
-    console.log(prettyDOM(appointment));
+
     // 6. Check that the error message "Error deleting. Please try again." is displayed.
     expect(
       getByText(appointment, "Error deleting. Please try again.")
