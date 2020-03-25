@@ -43,7 +43,6 @@
     "@testing-library/react-hooks": "^3.2.1",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
-    "fsevents": "^2.1.2",
     "react-test-renderer": "^16.13.0"
   },
   "jest": {
