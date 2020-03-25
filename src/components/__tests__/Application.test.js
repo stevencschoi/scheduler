@@ -144,7 +144,7 @@ describe("Application", () => {
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
-    fireEvent.click(getByAltText(appointment, "Cohana Roy"));
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
     // 5. Click the "Save" button
     fireEvent.click(getByText(appointment, "Save"));
