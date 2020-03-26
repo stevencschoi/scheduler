@@ -1,5 +1,6 @@
 import React from "react";
 
+// mode to display while asynchronous action is triggered
 export default function Status(props) {
   return (
     <main className="appointment__card appointment__card--status">

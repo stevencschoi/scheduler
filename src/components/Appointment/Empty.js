@@ -1,5 +1,5 @@
 import React from "react";
-
+// renders on main schedule as open appointment slot
 export default function Empty(props) {
   return (
     <main className="appointment__add">

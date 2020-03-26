@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 // stretch assignment to include sockets for real-time data updating
 const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
@@ -60,7 +60,7 @@ export function useApplicationData() {
       });
     });
   }
-
+  // updating the specific appointment state with null interview
   function deleteInterview(id) {
     const appointment = {
       ...state.appointments[id],
