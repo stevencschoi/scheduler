@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
-import axios from "axios";
-
-// to configure axios for online deployment
-if (process.env.REACT_APP_API_BASE_URL) {
-  axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
-}
 
 import useVisualMode from "hooks/useVisualMode";
 import Header from "./Header";
