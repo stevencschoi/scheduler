@@ -15,3 +15,5 @@ The app is programmed to run on https://localhost:8000 - use command `npm start`
 !["Screenshot of appointment editor"](https://raw.githubusercontent.com/stevencschoi/scheduler/master/docs/scheduler-edit-appointment.png)
 
 !["Screenshot of appointment deleting screen"](https://raw.githubusercontent.com/stevencschoi/scheduler/master/docs/scheduler-delete-appointment.png)
+
+To allow the full app experience, the env files have been shared publicly for this project.
