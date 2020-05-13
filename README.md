@@ -1,6 +1,6 @@
 # Interview Scheduler
 
-This scheduler was built using React Hooks and WebSockets for real-time updates. This project was tested using Jest and Cypress, and components were developed in isolation with StoryBook. Feel free to explore a [live version](https://5e7bf6ef93f0400008f0829b--hardcore-jennings-6a61ff.netlify.com/) of this app.
+This scheduler was built using React Hooks and WebSockets for real-time updates. This project was tested using Jest and Cypress, and components were developed in isolation with StoryBook. Feel free to explore a [live version](https://sc-scheduler.netlify.app/) of this app.
 
 ## Getting Started
 
